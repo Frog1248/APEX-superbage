@@ -1,0 +1,18 @@
+global class LeadProcessor implements 
+    Database.Batchable<sObject>, Database.Stateful {
+        global integer count = 0;
+        global Database.queryLocator start(Database.BatchableContext bc){
+            return Database.getQueryLocator('SELECT Id, LeadSource From Lead');
+        }
+        global void execute (Database.BatchableContext bc, List<Lead> ListOfLead){
+            List<Lead> NewListOfLead = new List<Lead>();
+            for(Lead l: ListOfLead){
+                l.Leadsource = 'Dreamforce';
+                NewListOfLead.add(l);
+            }
+            update NewListOfLead;
+        }
+        global void finish(Database.BatchableContext bc){
+            system.debug('count = ' + count);
+        }
+}

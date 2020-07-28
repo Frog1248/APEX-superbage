@@ -1,0 +1,19 @@
+@isTest
+public class LeadProcessorTest {
+    @isTest
+    public static void testIt(){
+        List<lead> ListOfLead = new List<lead>();
+        for(Integer i = 0; i < 200; i++){
+            Lead l = new lead();
+            l.LastName ='name' + i;
+             l.Company ='company' + i;
+             l.Status ='Super Status' + i;
+            ListOfLead.add(l);
+        }
+        insert ListOfLead;
+        Test.startTest();
+        LeadProcessor lp = new LeadProcessor();
+        Id batchId = Database.executeBatch(lp);
+        Test.stopTest();
+    }
+}
