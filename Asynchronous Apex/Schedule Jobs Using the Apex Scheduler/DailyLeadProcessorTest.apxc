@@ -1,0 +1,22 @@
+@isTest
+private class DailyLeadProcessorTest {
+    @TestSetup
+    static void setup(){
+        List<lead> ListOfLead = new List<Lead>();
+        for(Integer i = 1; i <= 200; i++){
+            Lead Id = new lead(FirstName ='omg' + i, LastName = 'Eniston', Company = 'asd');
+            ListOfLead.add(id);
+        }
+        insert ListOfLead;
+    }
+    static testmethod void DailyLeadProcessorTest(){
+        String sch = '0 0 0 15 3 ? 2022';
+        Test.startTest();
+        String jobId = System.Schedule('ScheduledApexText',sch, new DailyLeadProcessor());
+        List<lead> ListOfLead = [SELECT Id
+                                 FROM Lead
+                                 WHERE LeadSource = null LIMIT 200];
+        System.assertEquals(200, ListOfLead.size());
+        Test.stopTest();
+    }
+}
